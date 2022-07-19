@@ -1,0 +1,17 @@
+**/dist
+**/keys
+**/logs
+**/src/logs
+**/node_modules
+**/.git
+.env
+.env.example
+.gitignore
+.prettierignore
+.prettierrc.json
+docker-compose.yml
+LICENSE
+package.json
+readme.md
+tsconfig.json
+yarn.lock

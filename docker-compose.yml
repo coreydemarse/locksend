@@ -1,0 +1,16 @@
+version: "3.3"
+services:
+    node:
+        image: node:current-alpine
+        command: [sh, -c, "yarn install --frozen-lockfile && node dist/app.js"]
+        env_file: .env
+        restart: unless-stopped
+        ports:
+            - "1337:1337"
+        volumes:
+            - ./dist:/serve/node/dist
+            - ./package.json:/serve/node/package.json
+            - ./yarn.lock:/serve/node/yarn.lock
+            - ./node_modules:/serve/node/node_modules
+            - ./keys/publickey.asc:/serve/node/keys/publickey.asc
+        working_dir: /serve/node

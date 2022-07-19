@@ -1,0 +1,8 @@
+{
+    "indent_style": true,
+    "semi": false,
+    "trailingComma": "none",
+    "useTabs": true,
+    "bracketSpacing": true,
+    "bracketSameLine": true
+}

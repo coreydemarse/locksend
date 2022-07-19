@@ -1,0 +1,11 @@
+export default [
+	"SMTP_HOST",
+	"SMTP_PORT",
+	"SMTP_USER",
+	"SMTP_PASS",
+	"SMTP_RECEIVERS",
+	"SMTP_SENDER",
+	"SITE_NAME",
+	"API_PORT",
+	"CAPTCHA_ENABLED"
+]
