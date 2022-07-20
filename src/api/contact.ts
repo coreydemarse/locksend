@@ -230,7 +230,7 @@ export default class Contact {
 		// send email
 		try {
 			await this.#transporter.sendMail({
-				from: `${name} | ${process.env.SITE_NAME} <${process.env.SMTP_SENDER}>`, // sender address
+				from: `${process.env.SITE_NAME} <${process.env.SMTP_SENDER}>`, // sender address
 				to: process.env.SMTP_RECEIVERS, // list of receivers - comma separated string ("example@example1.com, example@example2.com")
 				subject: `MESSAGE FROM ${process.env.SITE_NAME}`, // Subject line
 				text: encryptedMessage // plain text body
