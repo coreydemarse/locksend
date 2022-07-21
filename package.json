@@ -5,9 +5,11 @@
     "locksend": "tsc && node dist/app.js",
     "docker": "tsc && docker-compose up",
     "lint": "eslint . --ext .ts",
-    "format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "coverage": "vitest run --coverage",
+    "test": "vitest"
   },
-  "main": "index.js",
+  "main": "dist/app.js",
   "license": "MIT",
   "dependencies": {
     "@openpgp/web-stream-tools": "^0.0.11",
@@ -34,7 +36,9 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "2.7.1",
-    "typescript": "^4.7.4"
+    "supertest": "^6.2.4",
+    "typescript": "^4.7.4",
+    "vitest": "^0.18.1"
   },
   "repository": "git@github.com:coreydemarse/locksend.git",
   "author": "Corey Raymond DeMarse <1267870+coreydemarse@users.noreply.github.com>"
