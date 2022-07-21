@@ -16,7 +16,17 @@ describe("POST /send", () => {
     it ("should return a validation error with no data", async () => {
         const response = await supertest.post('/send')
         expect(response.status).toEqual(400)
-        expect(response.body.error).toEqual('validation error')
+        expect(response.body.errors).toEqual([
+            {"msg":"name is required","param":"name","location":"body"},
+            {"msg":"email is required","param":"email","location":"body"},
+            {"msg":"message is required","param":"message","location":"body"},
+            {"msg":"name must be a string","param":"name","location":"body"},
+            {"msg":"email must be a string","param":"email","location":"body"},
+            {"msg":"message must be a string","param":"message","location":"body"},
+            {"msg":"name must be between 1 and 60 characters","param":"name","location":"body"},
+            {"msg":"email must be a valid email address","param":"email","location":"body"},
+            {"msg":"message must be between 1 and 1000 characters","param":"message","location":"body"}
+        ]
     })
 
     it ("should return a validation error with missing name", async () => {
@@ -26,7 +36,11 @@ describe("POST /send", () => {
         })
 
         expect(response.status).toEqual(400)
-        expect(response.body.error).toEqual('validation error')
+        expect(response.body.errors).toEqual([
+            {"msg":"name is required","param":"name","location":"body"},
+            {"msg":"name must be a string","param":"name","location":"body"},
+            {"msg":"name must be between 1 and 60 characters","param":"name","location":"body"}
+        ])
     })
 
     it("should return a validation error with missing email", async () => {
@@ -36,7 +50,11 @@ describe("POST /send", () => {
         })
 
         expect(response.status).toEqual(400)
-        expect(response.body.error).toEqual('validation error')
+        expect(response.body.errors).toEqual([
+            {"msg":"email is required","param":"email","location":"body"},
+            {"msg":"email must be a string","param":"email","location":"body"},
+            {"msg":"email must be a valid email address","param":"email","location":"body"}
+        ])
     })
 
     it("should return a validation error with missing message", async () => {
@@ -46,7 +64,11 @@ describe("POST /send", () => {
         })
 
         expect(response.status).toEqual(400)
-        expect(response.body.error).toEqual('validation error')
+        expect(response.body.errors).toEqual([
+            {"msg":"message is required","param":"message","location":"body"},
+            {"msg":"message must be a string","param":"message","location":"body"},
+            {"msg":"message must be between 1 and 1000 characters","param":"message","location":"body"}
+        ])
     })
 
     it("should return a validation error with a name too long", async () => {
@@ -57,7 +79,9 @@ describe("POST /send", () => {
         })
 
         expect(response.status).toEqual(400)
-        expect(response.body.error).toEqual('validation error')
+        expect(response.body.errors).toEqual([
+            {"msg":"name must be between 1 and 60 characters","param":"name","location":"body"}
+        ])
     })
 
     it("should return a validation error with invalid email", async () => {
@@ -68,7 +92,9 @@ describe("POST /send", () => {
         })
 
         expect(response.status).toEqual(400)
-        expect(response.body.error).toEqual('validation error')
+        expect(response.body.errors).toEqual([
+            {"msg":"email must be a valid email address","param":"email","location":"body"}
+        ])
     })
 
     it("should return a validation error with a message too long", async () => {
@@ -79,7 +105,9 @@ describe("POST /send", () => {
         })
 
         expect(response.status).toEqual(400)
-        expect(response.body.error).toEqual('validation error')
+        expect(response.body.error).toEqual([
+            {"msg":"message must be between 1 and 1000 characters","param":"message","location":"body"}
+        ])
     })
 
     it("it should return a 200 if an email is successfully sent", async () => {
