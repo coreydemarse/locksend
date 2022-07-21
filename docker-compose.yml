@@ -6,7 +6,7 @@ services:
         env_file: .env
         restart: unless-stopped
         ports:
-            - "1337:1337"
+            - "3000:3000"
         volumes:
             - ./dist:/serve/node/dist
             - ./package.json:/serve/node/package.json
