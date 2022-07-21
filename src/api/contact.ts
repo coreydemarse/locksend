@@ -133,6 +133,17 @@ export default class Contact {
 		}>,
 		res: Response
 	) => {
+
+		const myValidationResult = validationResult.withDefaults({
+			formatter: error => {
+			  return {
+				param: error.param,
+				msg: error.msg,
+				location: error.location
+			  };
+			},
+		  })
+
 		const errors = validationResult(req)
 
 		// catch all validation errors
