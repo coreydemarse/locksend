@@ -5,7 +5,9 @@
     "locksend": "tsc && node dist/app.js",
     "docker": "tsc && docker-compose up",
     "lint": "eslint . --ext .ts",
-    "format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "coverage": "vitest run --coverage",
+    "test": "vitest"
   },
   "main": "index.js",
   "license": "MIT",
