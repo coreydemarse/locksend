@@ -105,7 +105,7 @@ describe("POST /send", () => {
         })
 
         expect(response.status).toEqual(400)
-        expect(response.body.error).toEqual([
+        expect(response.body.errors).toEqual([
             {"msg":"message must be between 1 and 1000 characters","param":"message","location":"body"}
         ])
     })
