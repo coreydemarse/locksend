@@ -137,7 +137,7 @@ export default class Contact {
 
 		// catch all validation errors
 		if (!errors.isEmpty()) {
-			return res.status(400).json(errors.array())
+			return res.status(400).json({ errors: errors.array() })
 		}
 
 		const name = req.body.name
