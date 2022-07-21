@@ -26,7 +26,7 @@ describe("POST /send", () => {
             {"msg":"name must be between 1 and 60 characters","param":"name","location":"body"},
             {"msg":"email must be a valid email address","param":"email","location":"body"},
             {"msg":"message must be between 1 and 1000 characters","param":"message","location":"body"}
-        ]
+        ])
     })
 
     it ("should return a validation error with missing name", async () => {
@@ -105,7 +105,7 @@ describe("POST /send", () => {
         })
 
         expect(response.status).toEqual(400)
-        expect(response.body.error).toEqual([
+        expect(response.body.errors).toEqual([
             {"msg":"message must be between 1 and 1000 characters","param":"message","location":"body"}
         ])
     })
