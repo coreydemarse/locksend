@@ -9,7 +9,7 @@
     "coverage": "vitest run --coverage",
     "test": "vitest"
   },
-  "main": "index.js",
+  "main": "dist/app.js",
   "license": "MIT",
   "dependencies": {
     "@openpgp/web-stream-tools": "^0.0.11",
