@@ -137,8 +137,8 @@ export default class Contact {
 		const myValidationResult = validationResult.withDefaults({
 			formatter: error => {
 			  return {
-				param: error.param,
 				msg: error.msg,
+				param: error.param,
 				location: error.location
 			  };
 			},
