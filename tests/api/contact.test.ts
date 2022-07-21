@@ -20,20 +20,6 @@ describe("POST /send", () => {
     })
 
     it ("should return a validation error with missing name", async () => {
-        // mock captcha using test keys
-        if (process.env.CAPTCHA_ENABLED === "true") {
-            const response = await supertest.post('/send').send({
-                email: "example@example.com",
-                message: "This is a test message",
-                captcha: testkeys.response
-            })
-
-            expect(response.status).toEqual(400)
-            expect(response.body.error).toEqual('validation error')
-
-            return
-        }
-
         const response = await supertest.post('/send').send({
             email: "example@example.com",
             message: "This is a test message"
