@@ -1,4 +1,4 @@
-import openpgp from 'openpgp'
+import * as openpgp from 'openpgp'
 import fs from 'fs'
 import { GPG as gpg } from 'gpg-ts/dist/gpg'
 
@@ -70,7 +70,7 @@ export default class gpgUtils {
     // load public key for gpg library or openpgp library based on environment variable USE_SYS_GPG
     async #loadPublicKey() {
         if (process.env.USE_SYS_GPG !== 'true') {
-            const key = fs.readFileSync('./keys/publickey.asc', 'utf8')
+            const key = fs.readFileSync('keys/publickey.asc', 'utf8')
             this.#publicKey = await openpgp.readKey({ armoredKey: key })
         }
     }
