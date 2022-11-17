@@ -13,11 +13,10 @@ import rateLimit, { RateLimitRequestHandler } from "express-rate-limit"
 import { Logger } from "pino"
 import * as validations from "../validations/contact"
 import nodeMailer from "nodemailer"
-import * as openpgp from "openpgp"
-import fs from "fs"
 import { exit } from "process"
 import { verify } from "hcaptcha"
 import { validationResult } from "express-validator"
+import gpgUtils from "../utils/gpgUtils"
 
 interface TypedRequestBody<T> extends Express.Request {
 	body: T
@@ -29,7 +28,7 @@ export default class Contact {
 		pino: Logger
 	}
 
-	#publicKey: openpgp.Key
+	readonly #gpgUtils: gpgUtils
 	readonly #transporter: nodeMailer.Transporter
 
 	constructor(appVars: { app: Application; pino: Logger }) {
@@ -71,13 +70,9 @@ export default class Contact {
 			exit()
 		}
 
-		// load PGP public key
+		// load gpgutils
 		try {
-			const key = fs.readFileSync("./keys/publickey.asc", "utf8")
-
-			openpgp.readKey({ armoredKey: key }).then((key) => {
-				this.#publicKey = key
-			})
+			this.#gpgUtils = new gpgUtils()
 		} catch (e) {
 			this.#appVars.pino.error({
 				code: "SERVER_NO_PUBLICKEY",
@@ -142,13 +137,14 @@ export default class Contact {
 				location: error.location
 			  };
 			},
-		  })
+		})
 
-		const errors = validationResult(req)
+		const errors = myValidationResult(req)
 
 		// catch all validation errors
 		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: myValidationResult(req).array() })
+			res.status(400).json({ errors: errors.array() })
+			return
 		}
 
 		const name = req.body.name
@@ -205,19 +201,16 @@ export default class Contact {
 		})
 
 		try {
+
+			const text = "FROM: " +
+			name +
+			"\n\nEMAIL ADDRESS: '" +
+			email +
+			"'\n\nMESSAGE:\n\n" +
+			message
+
 			// encrypt message
-			encryptedMessage = (await openpgp.encrypt({
-				message: await openpgp.createMessage({
-					text:
-						"FROM: " +
-						name +
-						"\n\nEMAIL ADDRESS: '" +
-						email +
-						"'\n\nMESSAGE:\n\n" +
-						message
-				}), // input as Message object
-				encryptionKeys: this.#publicKey
-			})) as string
+			encryptedMessage = await this.#gpgUtils.encrypt(text)
 
 			this.#appVars.pino.info({
 				code: "POST_CONTACT_ENCRYPT_SUCCESS",
