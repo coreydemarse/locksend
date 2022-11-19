@@ -34,7 +34,7 @@ SMTP_PASS=examplepassword
 SMTP_RECEIVERS=a@example.com
 SITE_NAME=domainexample
 API_PORT=3000 // port to run locksend on
-ORIGIN=https://domainexample.com the domain origin you will be serving locksend from
+ORIGIN=https://example.com the domain origin you will be serving locksend from
 CAPTCHA_ENABLED=false // enable hCaptcha
 CAPTCHA_SECRET= // only required if CAPTCHA_ENABLED is set to true
 ```
