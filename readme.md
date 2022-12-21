@@ -1,4 +1,4 @@
-# locksend
+<h1 align="center">🔐🚀<br>locksend</h1>
 
 A simple, secure node.js endpoint for sending PGP encrypted emails 🔐🚀
 
